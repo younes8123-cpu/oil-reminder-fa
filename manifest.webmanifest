@@ -1,0 +1,15 @@
+{
+  "name": "یادآور تعویض روغن خودرو",
+  "short_name": "یادآور روغن",
+  "description": "ثبت سوابق و یادآوری تعویض روغن خودرو با تقویم شمسی",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6fb",
+  "theme_color": "#153b78",
+  "icons": [
+    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
+  ]
+}
