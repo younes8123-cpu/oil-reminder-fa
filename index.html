@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#153b78">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>یادآور تعویض روغن خودرو</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--ink:#17243a;--muted:#718096;--blue:#2463eb;--teal:#0f9d8a;--line:#e6ebf2;--red:#dc4c4c}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#edf4ff,#f7f8fc 55%,#e9f8f5);font-family:Tahoma,Arial,sans-serif;color:var(--ink);padding:18px}
+.wrap{max-width:900px;margin:auto}.hero{background:linear-gradient(120deg,#153b78,#2675d8);color:white;border-radius:24px;padding:25px;box-shadow:0 12px 30px #174a8728;position:relative;overflow:hidden}
+.hero:after{content:"🚘";position:absolute;left:24px;top:18px;font-size:64px;opacity:.22}.hero h1{margin:0 0 8px;font-size:25px}.hero p{margin:0;color:#dceaff;font-size:13px;line-height:1.9}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 5px 18px #1b37600b}.full{grid-column:1/-1}.section-title{font-size:16px;font-weight:bold;margin:0 0 14px;display:flex;align-items:center;gap:8px}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px}input,select,textarea{width:100%;border:1px solid #dce3ed;border-radius:11px;padding:12px;font:14px Tahoma;background:#fbfcff;color:var(--ink);outline:none}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2463eb18}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:12px;padding:12px 17px;font: bold 14px Tahoma;cursor:pointer;background:var(--blue);color:white;margin-top:14px}.btn.secondary{background:#eaf0ff;color:#2455b7}.btn.danger{background:#fff0f0;color:#bd3434}.btn.small{padding:8px 11px;font-size:12px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#f5f8ff;border:1px solid #e5edff;border-radius:14px;padding:13px;text-align:center}.stat b{display:block;font-size:19px;color:#245cc4;margin-bottom:5px}.stat span{font-size:11px;color:var(--muted)}
+.status{padding:13px;border-radius:13px;background:#edf9f5;color:#087b66;font-size:13px;line-height:1.9;margin-top:12px}.status.warn{background:#fff6e8;color:#9b5a00}.status.due{background:#fff0f0;color:#b52d2d}
+.item{border:1px solid var(--line);border-radius:13px;padding:13px;margin-top:10px;display:flex;justify-content:space-between;gap:12px;align-items:center}.item strong{font-size:14px}.item small{display:block;color:var(--muted);font-size:11px;line-height:1.9;margin-top:4px}
+.empty{text-align:center;color:var(--muted);padding:22px;font-size:13px}.foot{text-align:center;color:var(--muted);font-size:11px;padding:18px 5px}
+@media(max-width:650px){body{padding:10px}.grid{grid-template-columns:1fr}.full{grid-column:auto}.hero{padding:21px}.hero h1{font-size:21px}.hero:after{font-size:48px;left:12px;top:22px}.stats{gap:6px}.stat{padding:10px 5px}.stat b{font-size:16px}.row{gap:8px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<h1>یادآور هوشمند تعویض روغن</h1>
+<p>مشخصات خودرو و کیلومتر را ثبت کنید تا زمان سرویس بعدی را همیشه در دسترس داشته باشید.<br>اطلاعات شما روی همین دستگاه ذخیره می‌شود.</p>
+</header>
+
+<div class="grid">
+<section class="card">
+<h2 class="section-title">🚗 مشخصات خودرو</h2>
+<label>نام خودرو</label><input id="car" placeholder="مثلاً پژو ۲۰۶، پراید، سمند">
+<div class="row">
+<div><label>مدل / سال ساخت</label><input id="model" placeholder="مثلاً ۱۳۹۸"></div>
+<div><label>شماره پلاک (اختیاری)</label><input id="plate" placeholder="ایران ..."></div>
+</div>
+<label>نوع روغن و گرانروی</label><input id="oil" placeholder="مثلاً 10W-40">
+<label>حجم روغن (لیتر)</label><input id="volume" type="number" step="0.1" min="0" placeholder="مثلاً ۴">
+<button class="btn" onclick="saveCar()">ذخیره مشخصات خودرو</button>
+</section>
+
+<section class="card">
+<h2 class="section-title">🛢️ ثبت تعویض روغن</h2>
+<label>تاریخ تعویض روغن (شمسی)</label><input id="date" type="text" inputmode="numeric" placeholder="مثلاً ۱۴۰۵/۰۸/۳۰" autocomplete="off">
+<label>کیلومتر فعلی خودرو هنگام تعویض</label><input id="km" type="number" min="0" placeholder="مثلاً ۱۲۵۰۰۰">
+<div class="row">
+<div><label>فاصله تعویض بعدی (کیلومتر)</label><input id="interval" type="number" min="500" value="5000"></div>
+<div><label>یادآوری پس از چند ماه</label><input id="months" type="number" min="1" value="6"></div>
+</div>
+<label>توضیحات (فیلتر، تعمیرگاه و ...)</label><input id="note" placeholder="مثلاً فیلتر روغن هم تعویض شد">
+<button class="btn" onclick="addChange()">ثبت سرویس و محاسبه موعد بعدی</button>
+</section>
+
+<section class="card full">
+<h2 class="section-title">📊 وضعیت سرویس بعدی</h2>
+<div class="stats">
+<div class="stat"><b id="nextKm">—</b><span>کیلومتر تعویض بعدی</span></div>
+<div class="stat"><b id="nextDate">—</b><span>تاریخ پیشنهادی بعدی</span></div>
+<div class="stat"><b id="lastKm">—</b><span>کیلومتر آخرین سرویس</span></div>
+</div>
+<div id="status" class="status">برای مشاهده زمان سرویس بعدی، یک تعویض روغن ثبت کنید.</div>
+<label>کیلومتر فعلی خودرو (برای بررسی میزان نزدیک‌شدن به سرویس)</label>
+<input id="currentKm" type="number" min="0" placeholder="کیلومتر فعلی را وارد کنید" oninput="render()">
+</section>
+
+<section class="card full">
+<h2 class="section-title">💾 پشتیبان‌گیری و بازیابی اطلاعات</h2>
+<p style="font-size:12px;color:#718096;line-height:2;margin:0">برای نگهداری سوابق، هر چند وقت یک‌بار فایل پشتیبان بگیرید و آن را در جای امن ذخیره کنید. هنگام تعویض گوشی نیز می‌توانید همین فایل را در برنامه جدید بازیابی کنید.</p>
+<div class="row">
+<button class="btn" onclick="exportBackup()">دریافت فایل پشتیبان</button>
+<button class="btn secondary" onclick="$('backupFile').click()">بازیابی از فایل پشتیبان</button>
+</div>
+<input id="backupFile" type="file" accept=".json,application/json" style="display:none" onchange="importBackup(event)">
+<div id="backupMessage" class="status" style="display:none"></div>
+</section>
+
+<section class="card full">
+<h2 class="section-title">📋 سوابق تعویض روغن</h2>
+<div id="history" class="empty">هنوز سابقه‌ای ثبت نشده است.</div>
+</section>
+</div>
+<div class="foot">یادآوری‌ها بر اساس اطلاعاتی است که وارد می‌کنید؛ زمان مناسب تعویض روغن را با دفترچه خودرو و توصیه سازنده تطبیق دهید.</div>
+</div>
+<script>
+const KEY='oilReminderApp_v1';
+let data=JSON.parse(localStorage.getItem(KEY)||'{"car":{},"records":[]}');
+const $=id=>document.getElementById(id);
+function persist(){localStorage.setItem(KEY,JSON.stringify(data));}
+function saveCar(){
+ data.car={name:$('car').value.trim(),model:$('model').value.trim(),plate:$('plate').value.trim(),oil:$('oil').value.trim(),volume:$('volume').value};
+ persist(); alert('مشخصات خودرو ذخیره شد.'); render();
+}
+function addChange(){
+ const jalaliDate=$('date').value.trim(), date=jalaliToISO(jalaliDate), km=Number($('km').value), interval=Number($('interval').value), months=Number($('months').value);
+ if(!date||$('km').value===''||km<0||!interval||interval<500||!months||months<1){alert('لطفاً تاریخ شمسی را به شکل سال/ماه/روز (مثلاً ۱۴۰۵/۰۸/۳۰)، کیلومتر و فاصله سرویس را درست وارد کنید.');return;}
+ data.records.unshift({id:Date.now(),date,km,interval,months,note:$('note').value.trim()});
+ persist();$('note').value='';$('date').value=todayJalali();$('km').value='';render();alert('سرویس با موفقیت ثبت شد.');
+}
+function fmt(n){return Number(n).toLocaleString('fa-IR');}
+function jalaliParts(date){
+ const parts=new Intl.DateTimeFormat('en-u-ca-persian',{year:'numeric',month:'numeric',day:'numeric'}).formatToParts(date);
+ const get=t=>Number(parts.find(p=>p.type===t).value);
+ return {y:get('year'),m:get('month'),d:get('day')};
+}
+function todayJalali(){const p=jalaliParts(new Date());return [p.y,String(p.m).padStart(2,'0'),String(p.d).padStart(2,'0')].join('/');}
+function jalaliToISO(value){
+ const normalized=String(value).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[-.]/g,'/').trim();
+ const m=normalized.match(/^(\\d{4})\\/(\\d{1,2})\\/(\\d{1,2})$/);
+ if(!m)return null;
+ const y=Number(m[1]),mo=Number(m[2]),day=Number(m[3]);
+ if(mo<1||mo>12||day<1||day>(mo<=6?31:mo<=11?30:30))return null;
+ const target=`${y}-${mo}-${day}`;
+ const approx=new Date(y+621,2,20,12);
+ for(let offset=-3;offset<=25;offset++){
+  const candidate=new Date(approx);candidate.setDate(approx.getDate()+offset);
+  const p=jalaliParts(candidate);
+  if(p.y===y&&p.m===mo&&p.d===day)return candidate.getFullYear()+'-'+String(candidate.getMonth()+1).padStart(2,'0')+'-'+String(candidate.getDate()).padStart(2,'0');
+ }
+ return null;
+}
+function faDate(s){
+ if(!s)return '—';
+ const d=new Date(s+'T12:00:00'),p=jalaliParts(d);
+ return `${p.y}/${String(p.m).padStart(2,'0')}/${String(p.d).padStart(2,'0')}`;
+}
+function addMonths(dateStr,months){let d=new Date(dateStr+'T12:00:00');d.setMonth(d.getMonth()+months);return d;}
+function render(){
+ const c=data.car||{};$('car').value=c.name||'';$('model').value=c.model||'';$('plate').value=c.plate||'';$('oil').value=c.oil||'';$('volume').value=c.volume||'';
+ const r=data.records[0];
+ if(!r){$('nextKm').textContent='—';$('nextDate').textContent='—';$('lastKm').textContent='—';$('status').className='status';$('status').textContent='برای مشاهده زمان سرویس بعدی، یک تعویض روغن ثبت کنید.';}
+ else{
+  const nk=r.km+r.interval, nd=addMonths(r.date,r.months), today=new Date();today.setHours(0,0,0,0);
+  $('nextKm').textContent=fmt(nk);$('nextDate').textContent=nd.toLocaleDateString('fa-IR');$('lastKm').textContent=fmt(r.km);
+  const ck=$('currentKm').value===''?null:Number($('currentKm').value);
+  let msg='موعد پیشنهادی سرویس بعدی: '+fmt(nk)+' کیلومتر یا '+nd.toLocaleDateString('fa-IR')+'؛ هرکدام زودتر فرا برسد.';
+  let cls='status';
+  if(today>=nd||(ck!==null&&ck>=nk)){cls='status due';msg='زمان تعویض روغن فرا رسیده یا از موعد آن گذشته است. بهتر است برای سرویس اقدام کنید.';}
+  else if((ck!==null&&nk-ck<=500)||nd-today<=30*86400000){cls='status warn';msg='به زمان تعویض روغن نزدیک می‌شوید. برای سرویس بعدی برنامه‌ریزی کنید.';}
+  $('status').className=cls;$('status').textContent=msg;
+ }
+ const h=$('history');
+ if(!data.records.length){h.className='empty';h.textContent='هنوز سابقه‌ای ثبت نشده است.';}
+ else{h.className='';h.innerHTML=data.records.map((x,i)=>`<div class="item"><div><strong>${faDate(x.date)} — ${fmt(x.km)} کیلومتر</strong><small>موعد بعدی: ${fmt(x.km+x.interval)} کیلومتر | ${x.months} ماه بعد${x.note?' | '+esc(x.note):''}</small></div><button class="btn small danger" onclick="removeRecord(${x.id})">حذف</button></div>`).join('');}
+}
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function removeRecord(id){if(confirm('این سابقه حذف شود؟')){data.records=data.records.filter(x=>x.id!==id);persist();render();}}
+
+function exportBackup(){
+ const backup={app:'یادآور تعویض روغن',version:1,createdAt:new Date().toISOString(),data};
+ const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json;charset=utf-8'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;
+ a.download='پشتیبان-تعویض-روغن-'+new Date().toISOString().slice(0,10)+'.json';
+ document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+ showBackupMessage('فایل پشتیبان دریافت شد؛ آن را در پوشه‌ای امن نگهداری کنید.');
+}
+function importBackup(event){
+ const file=event.target.files&&event.target.files[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const parsed=JSON.parse(reader.result), incoming=parsed.data||parsed;
+   if(!incoming||!incoming.car||!Array.isArray(incoming.records))throw new Error('invalid');
+   if(!confirm('اطلاعات فعلی با اطلاعات داخل فایل پشتیبان جایگزین می‌شود. ادامه می‌دهید؟')){event.target.value='';return;}
+   data={car:incoming.car||{},records:incoming.records};persist();render();
+   showBackupMessage('اطلاعات با موفقیت بازیابی شد.');
+  }catch(e){alert('فایل انتخاب‌شده معتبر نیست یا متعلق به برنامه یادآور تعویض روغن نیست.');}
+  event.target.value='';
+ };
+ reader.onerror=()=>{alert('خواندن فایل با مشکل روبه‌رو شد.');event.target.value='';};
+ reader.readAsText(file,'UTF-8');
+}
+function showBackupMessage(message){const box=$('backupMessage');box.textContent=message;box.style.display='block';}
+$('date').value=todayJalali();render();
+</script>
+<script>
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script>
+</body></html>
